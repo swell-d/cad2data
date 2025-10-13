@@ -1,5 +1,5 @@
-docker build -t cad2data:latest --label keep=true .
+docker build -t cad2data:latest .
 
-docker run -d --name cad2data-keeper --restart unless-stopped --network none --entrypoint sleep cad2data:latest infinity
+docker run -d --name cad2data --restart unless-stopped -v /var/www/360/share:/share cad2data:latest
 
-docker system prune -f --filter label!=keep=true
+docker system prune -f
