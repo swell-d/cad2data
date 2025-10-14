@@ -37,4 +37,5 @@ ENV FLASK_APP="server.py"
 
 RUN micromamba run -n myenv python -m compileall -q -f /app
 
+EXPOSE 5001
 ENTRYPOINT ["/app/entrypoint.sh"]
