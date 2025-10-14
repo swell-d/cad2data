@@ -9,6 +9,11 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify(status='ok'), 200
+
+
 @app.route('/rvt2ifc', methods=['POST'])
 def run():
     if not request.is_json:
