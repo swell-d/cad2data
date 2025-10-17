@@ -17,6 +17,7 @@ ENV WINEDLLOVERRIDES="mscoree,mshtml=;winemenubuilder.exe=d;winedbg.exe=d;winegs
 ENV WINEDEBUG=-all
 ENV WINEARCH=win64
 ENV WINEPREFIX="${HOME}/.wine"
+ENV XDG_RUNTIME_DIR="/tmp/xdg"
 
 WORKDIR /cad2data
 RUN git clone --depth=1 https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto.git /cad2data
