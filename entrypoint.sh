@@ -2,5 +2,4 @@
 set -e
 
 echo "Starting..."
-mkdir -p "$WINEPREFIX"
 exec micromamba run -n myenv gunicorn --workers=1 --bind 0.0.0.0:5001 server:app
