@@ -6,18 +6,22 @@ USER root
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        xvfb xauth wine libwine git curl && \
+        xvfb xauth wine wine64 libwine winbind rsync uuid-runtime git curl && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN chown -R mambauser:mambauser /home/mambauser
+RUN mkdir -p /opt/wineprefix-template && chown -R mambauser:mambauser /opt/wineprefix-template
 USER mambauser
 
 ENV HOME="/home/mambauser"
 ENV WINEDLLOVERRIDES="mscoree,mshtml=;winemenubuilder.exe=d;winedbg.exe=d;winegstreamer=;d3d11=;d3d10=;d3d9=;dxgi="
 ENV WINEDEBUG=-all
 ENV WINEARCH=win64
-ENV WINEPREFIX="${HOME}/.wine"
+ENV WINEPREFIX="/opt/wineprefix-template"
+ENV BASE_WINEPREFIX="/opt/wineprefix-template"
 ENV XDG_RUNTIME_DIR="/tmp/xdg"
+
+RUN mkdir -p "$XDG_RUNTIME_DIR"
+RUN xvfb-run -a -s "-screen 0 1024x768x16 -nolisten tcp" wineboot -u && wineserver -w
 
 WORKDIR /cad2data
 RUN git clone --depth=1 https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto.git /cad2data
