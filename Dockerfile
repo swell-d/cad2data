@@ -6,7 +6,7 @@ USER root
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        xvfb xauth wine libwine git curl && \
+        xvfb xauth wine libwine ca-certificates git curl && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN chown -R mambauser:mambauser /home/mambauser
