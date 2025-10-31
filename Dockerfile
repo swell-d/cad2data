@@ -36,7 +36,8 @@ ENV CONDA_PREFIX="${MAMBA_ROOT_PREFIX}/envs/myenv"
 ENV PATH="${CONDA_PREFIX}/bin:${PATH}"
 ENV FLASK_APP="server.py"
 
-RUN micromamba run -n myenv python -m compileall -q -f /app
+RUN micromamba run -n myenv python -m compileall -b -f -q /app
+RUN find /app -name "*.py" -delete
 
 EXPOSE 5001
 ENTRYPOINT ["/app/entrypoint.sh"]
