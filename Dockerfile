@@ -34,7 +34,6 @@ RUN micromamba env create -f /app/environment.yml && micromamba clean --all --ye
 RUN echo "MAMBA_ROOT_PREFIX=${MAMBA_ROOT_PREFIX}" && micromamba env list
 ENV CONDA_PREFIX="${MAMBA_ROOT_PREFIX}/envs/myenv"
 ENV PATH="${CONDA_PREFIX}/bin:${PATH}"
-ENV FLASK_APP="server.py"
 
 RUN micromamba run -n myenv python -m compileall -b -f -q /app
 RUN find /app -name "*.py" -delete
