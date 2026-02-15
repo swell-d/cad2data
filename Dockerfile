@@ -20,8 +20,6 @@ USER mambauser
 
 WORKDIR /app
 RUN git clone --depth=1 https://github.com/swell-d/cad2data.git /app
-RUN chmod +x /app/entrypoint.sh
-RUN chmod +x /app/run.sh
 
 ARG MAMBA_DOCKERFILE_ACTIVATE=1
 RUN micromamba env create -f /app/environment.yml && micromamba clean --all --yes && micromamba run -n myenv python -m pip cache purge
