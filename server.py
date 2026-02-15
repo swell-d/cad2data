@@ -30,7 +30,7 @@ def run():
 
 def process(rvt_input, ifc_output):
     log_path = f"{ifc_output}.undone"
-    cmd = ['/app/run.sh', rvt_input, ifc_output]
+    cmd = ['RVT2IFCconverter', rvt_input, ifc_output]
     with open(log_path, 'a', encoding='utf-8') as log:
         log.write(f"{rvt_input} -> {ifc_output} start...\n")
         result = subprocess.run(
