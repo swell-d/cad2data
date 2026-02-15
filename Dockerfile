@@ -28,8 +28,7 @@ RUN echo "MAMBA_ROOT_PREFIX=${MAMBA_ROOT_PREFIX}" && micromamba env list
 ENV CONDA_PREFIX="${MAMBA_ROOT_PREFIX}/envs/myenv"
 ENV PATH="${CONDA_PREFIX}/bin:${PATH}"
 
-RUN micromamba run -n myenv python -m compileall -b -f -q /app
-RUN find /app -name "*.py" -delete
+RUN micromamba run -n myenv python -m compileall -b -f -q /app && find /app -name "*.py" -delete
 
 EXPOSE 5001
 ENTRYPOINT ["micromamba","run","-n","myenv","gunicorn","--workers=1","--bind","0.0.0.0:5001","server:app"]
