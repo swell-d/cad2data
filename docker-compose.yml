@@ -9,9 +9,11 @@ services:
     ports:
       - "5001:5001"
     read_only: true
+    environment:
+      XDG_CACHE_HOME: /tmp/.cache
+      MAMBA_ROOT_PREFIX: /tmp/mamba
     tmpfs:
       - /tmp
-      - /home/mambauser:uid=1000,gid=1000,mode=700
     security_opt:
       - no-new-privileges:true
     cap_drop:
