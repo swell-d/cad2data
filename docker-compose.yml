@@ -1,6 +1,6 @@
 services:
   cad2data:
-    user: "1000:1000"
+    user: "mambauser"
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,9 +9,6 @@ services:
     ports:
       - "5001:5001"
     read_only: true
-    environment:
-      XDG_CACHE_HOME: /tmp/.cache
-      MAMBA_ROOT_PREFIX: /tmp/mamba
     tmpfs:
       - /tmp
     security_opt:

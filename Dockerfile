@@ -1,9 +1,4 @@
-FROM mambaorg/micromamba:latest
-
-SHELL ["/bin/bash", "-lc"]
-
-USER root
-ARG DEBIAN_FRONTEND=noninteractive
+FROM python:3.13-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates curl gnupg
@@ -15,20 +10,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ddc-rvt2ifcconverter git && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN chown -R mambauser:mambauser /home/mambauser
+RUN useradd -m -u 57439 mambauser
 USER mambauser
 
 WORKDIR /app
 RUN git clone --depth=1 https://github.com/swell-d/cad2data.git /app
 
-ARG MAMBA_DOCKERFILE_ACTIVATE=1
-RUN micromamba env create -f /app/environment.yml && micromamba clean --all --yes && micromamba run -n myenv python -m pip cache purge
+RUN pip install --no-cache-dir flask gunicorn
+ENV PATH="/home/appuser/.local/bin:$PATH"
 
-RUN echo "MAMBA_ROOT_PREFIX=${MAMBA_ROOT_PREFIX}" && micromamba env list
-ENV CONDA_PREFIX="${MAMBA_ROOT_PREFIX}/envs/myenv"
-ENV PATH="${CONDA_PREFIX}/bin:${PATH}"
-
-RUN micromamba run -n myenv python -m compileall -b -f -q /app && find /app -name "*.py" -delete
+RUN python -m compileall -b -f -q /app && find /app -name "*.py" -delete
 
 EXPOSE 5001
-ENTRYPOINT ["micromamba","run","-n","myenv","gunicorn","--workers=1","--bind","0.0.0.0:5001","server:app"]
+ENTRYPOINT ["gunicorn","--workers=1","--bind","0.0.0.0:5001","server:app"]
