@@ -22,4 +22,4 @@ ENV PATH="/home/appuser/.local/bin:$PATH"
 RUN python -m compileall -b -f -q /app && find /app -name "*.py" -delete
 
 EXPOSE 5001
-ENTRYPOINT ["gunicorn","--workers=1","--bind","0.0.0.0:5001","server:app"]
+CMD ["gunicorn","--workers=1","--bind","0.0.0.0:5001","server:app"]
