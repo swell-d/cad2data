@@ -17,9 +17,9 @@ WORKDIR /app
 RUN git clone --depth=1 https://github.com/swell-d/cad2data.git /app
 
 RUN pip install --no-cache-dir flask gunicorn
-ENV PATH="/home/appuser/.local/bin:$PATH"
+ENV PATH="/home/mambauser/.local/bin:$PATH"
 
 RUN python -m compileall -b -f -q /app && find /app -name "*.py" -delete
 
 EXPOSE 5001
-CMD ["gunicorn","--workers=1","--bind","0.0.0.0:5001","server:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5001", "--workers",  "1", "server:app"]
