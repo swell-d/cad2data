@@ -14,7 +14,7 @@ RUN useradd -m -u 57439 mambauser
 USER mambauser
 
 WORKDIR /app
-RUN git clone --depth=1 https://github.com/swell-d/cad2data.git /app
+RUN git clone --depth=1 https://github.com/swell-d/cad2data.git /app && rm -rf /app/.git
 
 RUN pip install --no-cache-dir flask gunicorn
 ENV PATH="/home/mambauser/.local/bin:$PATH"
