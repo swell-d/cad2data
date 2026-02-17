@@ -1,6 +1,6 @@
 services:
   cad2data:
-    user: "mambauser"
+    user: "appuser"
     build:
       context: .
       dockerfile: Dockerfile
