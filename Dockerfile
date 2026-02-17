@@ -22,4 +22,4 @@ ENV PATH="/home/mambauser/.local/bin:$PATH"
 RUN python -m compileall -b -f -q /app && find /app -name "*.py" -delete
 
 EXPOSE 5001
-CMD ["gunicorn", "--bind", "0.0.0.0:5001", "--workers",  "1", "server:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5001", "--workers", "1", "--threads", "1", "--timeout", "300", "app:app"]
